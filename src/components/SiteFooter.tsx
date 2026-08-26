@@ -107,6 +107,19 @@ export function SiteFooter() {
             {t.footer.resultDisclaimer}
           </p>
           <p className="mt-6 text-xs text-muted-foreground text-center">
+            {/* Partnerlik iddiasi 26 Agustos 2026'da musteriye SORULDU ve
+                teyit edildi; oncesinde dogrulanmamis oldugu icin kaldirilmisti. */}
+            {t.footer.partnerPre}{" "}
+            <a
+              href="https://wellnessallclub.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-foreground/85 hover:text-primary transition-colors"
+            >
+              Wellness All Club
+            </a>{" "}
+            {t.footer.partnerPost}
+            <span className="mx-2 text-muted-foreground/50">·</span>
             {t.footer.credit}{" "}
             <a
               href="https://www.trairx.com"

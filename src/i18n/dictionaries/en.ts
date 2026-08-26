@@ -380,8 +380,8 @@ export const en: typeof tr = {
     disclaimer: "The information on this site is for general presentation purposes and is not medical advice or treatment. If you have any concerns about your health, consult your doctor.",
     resultDisclaimer: "Service scope, areas and schedule information may change over time. Get in touch for the latest details.",
     credit: "Web design & development:",
-    partnerPre: "",
-    partnerPost: "",
+    partnerPre: "Tablo Wellness is a",
+    partnerPost: "partner",
   },
   blog: {
     badge: "Insight & Content",

@@ -378,8 +378,8 @@ export const tr = {
     disclaimer: "Bu sitedeki bilgiler tanıtım amaçlıdır; tıbbi tavsiye veya tedavi yerine geçmez. Sağlık durumunuzla ilgili endişeniz varsa hekiminize danışın.",
     resultDisclaimer: "Hizmet kapsamı, alanlar ve program bilgileri zaman içinde güncellenebilir. Güncel bilgi için bize ulaşın.",
     credit: "Web tasarım & geliştirme:",
-    partnerPre: "",
-    partnerPost: "",
+    partnerPre: "Tablo Wellness bir",
+    partnerPost: "partneridir",
   },
   blog: {
     badge: "Bilgi & İçerik",
