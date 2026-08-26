@@ -119,14 +119,23 @@ for f in index.html hizmetler.html kvkk.html sitemap.xml robots.txt \
   [ -f "$OUT/$f" ] || fail "$f yok"
 done
 
-# Onceki projede favicon EKSIK degildi — YANLIS dosya gitmisti. Varligini
-# kontrol etmek yetmez, boyutu da bakilir.
-for f in favicon.ico apple-touch-icon.png; do
-  if [ -f "$OUT/$f" ]; then
-    sz=$(wc -c < "$OUT/$f" | tr -d ' ')
-    [ "$sz" -gt 1000 ] || fail "$f cok kucuk ($sz bayt) — yanlis dosya olabilir"
-  fi
-done
+# Ikon dosyalarinin varligini kontrol etmek YETMEZ: dosya yerinde olup
+# yanlis/bozuk da olabilir. Ama BAYUT da kotu bir vekil — sade tasarimli
+# gecerli bir ikon 300 bayt olabilir (26 Agustos 2026'da tam bu yanlis
+# pozitifi uretti). Olculen sey TUR ve BOYUTLAR:
+#   favicon.ico          -> gercekten ICO mu
+#   apple-touch-icon.png -> PNG mi ve 180x180 mi (Apple'in bekledigi olcu)
+if [ -f "$OUT/favicon.ico" ]; then
+  file -b "$OUT/favicon.ico" | grep -qi "icon resource" \
+    || fail "favicon.ico gecerli bir ICO degil: $(file -b "$OUT/favicon.ico")"
+fi
+if [ -f "$OUT/apple-touch-icon.png" ]; then
+  info=$(file -b "$OUT/apple-touch-icon.png")
+  echo "$info" | grep -qi "PNG image data" \
+    || fail "apple-touch-icon.png PNG degil: $info"
+  echo "$info" | grep -q "180 x 180" \
+    || fail "apple-touch-icon.png 180x180 degil: $info"
+fi
 
 EMPTY=$(find "$OUT" -type f -size 0 | wc -l | tr -d ' ')
 [ "$EMPTY" = "0" ] || { find "$OUT" -type f -size 0 >&2; fail "$EMPTY adet 0 bayt dosya"; }
