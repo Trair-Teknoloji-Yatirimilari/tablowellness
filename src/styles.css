@@ -41,40 +41,41 @@
 :root {
   --radius: 0.5rem;
 
-  /* Tablo Wellness — koyu antrasit + elektrik yesili
-     Not: token ADLARI (gold, ivory, onyx) eski projeden korunuyor ki
-     bilesenler kirilmasin; DEGERLER fitness paletine gore yeniden tanimli. */
+  /* Tablo Wellness — marka paleti logodan turetildi
+     lacivert #0F1D28 · turkuaz #46BABA · camgobegi #06B0E1 · adaci yesil #7DC6B3
+     Not: token ADLARI (gold, ivory, onyx) devralinan kod tabanindan korunuyor
+     ki bilesenler kirilmasin; DEGERLER marka paletine gore tanimli. */
 
-  --background: oklch(0.155 0.006 250);
-  --foreground: oklch(0.955 0.004 250);
-  --card: oklch(0.205 0.008 250);
-  --card-foreground: oklch(0.955 0.004 250);
-  --popover: oklch(0.19 0.008 250);
-  --popover-foreground: oklch(0.955 0.004 250);
+  --background: oklch(0.196 0.026 243);
+  --foreground: oklch(0.965 0.006 220);
+  --card: oklch(0.246 0.030 243);
+  --card-foreground: oklch(0.965 0.006 220);
+  --popover: oklch(0.228 0.029 243);
+  --popover-foreground: oklch(0.965 0.006 220);
 
-  --primary: oklch(0.84 0.21 132);
-  --primary-foreground: oklch(0.17 0.02 132);
-  --secondary: oklch(0.26 0.008 250);
-  --secondary-foreground: oklch(0.955 0.004 250);
-  --muted: oklch(0.24 0.007 250);
-  --muted-foreground: oklch(0.72 0.008 250);
-  --accent: oklch(0.84 0.21 132);
-  --accent-foreground: oklch(0.17 0.02 132);
+  --primary: oklch(0.725 0.103 195);
+  --primary-foreground: oklch(0.185 0.030 210);
+  --secondary: oklch(0.300 0.030 240);
+  --secondary-foreground: oklch(0.965 0.006 220);
+  --muted: oklch(0.278 0.028 242);
+  --muted-foreground: oklch(0.745 0.020 225);
+  --accent: oklch(0.706 0.135 227);
+  --accent-foreground: oklch(0.185 0.030 210);
   --destructive: oklch(0.62 0.21 25);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.98 0.004 250 / 14%);
-  --input: oklch(0.28 0.008 250);
-  --ring: oklch(0.84 0.21 132);
+  --border: oklch(0.90 0.02 220 / 16%);
+  --input: oklch(0.320 0.030 240);
+  --ring: oklch(0.725 0.103 195);
 
-  /* eski "gold" tokenlari -> elektrik yesili */
-  --gold: oklch(0.84 0.21 132);
-  --gold-soft: oklch(0.70 0.16 135);
-  --ivory: oklch(0.955 0.004 250);
-  --onyx: oklch(0.125 0.006 250);
+  /* devralinan "gold" tokenlari -> marka turkuazi */
+  --gold: oklch(0.725 0.103 195);
+  --gold-soft: oklch(0.773 0.078 176);
+  --ivory: oklch(0.965 0.006 220);
+  --onyx: oklch(0.155 0.024 243);
 
-  --gradient-gold: linear-gradient(135deg, oklch(0.90 0.20 128), oklch(0.72 0.18 140));
-  --gradient-radial-gold: radial-gradient(circle at 50% 0%, oklch(0.84 0.21 132 / 0.16), transparent 62%);
-  --shadow-gold: 0 20px 60px -22px oklch(0.84 0.21 132 / 0.35);
+  --gradient-gold: linear-gradient(135deg, oklch(0.773 0.078 176), oklch(0.706 0.135 227));
+  --gradient-radial-gold: radial-gradient(circle at 50% 0%, oklch(0.725 0.103 195 / 0.16), transparent 62%);
+  --shadow-gold: 0 20px 60px -22px oklch(0.706 0.135 227 / 0.35);
   --shadow-elegant: 0 30px 60px -30px oklch(0.05 0 0 / 0.6);
 }
 
@@ -111,7 +112,10 @@
 
 @utility hairline {
   height: 1px;
-  background: linear-gradient(90deg, transparent, oklch(0.84 0.21 132 / 0.55), transparent);
+  /* 26 Agustos 2026: burada Skyland'in elektrik yesili SABIT yaziliydi ve
+     :root degisince tek basina kaldi. Komsu yardimcilar (text-gold-gradient,
+     glow-gold) token kullaniyordu, bu atlanmis. Marka turkuazina cekildi. */
+  background: linear-gradient(90deg, transparent, oklch(0.725 0.103 195 / 0.55), transparent);
 }
 
 @utility glow-gold {

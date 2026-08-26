@@ -50,8 +50,13 @@ docker run -p 3000:3000 tablo-wellness
 
 ## Deploy
 
-`deploy.sh` sunucudaki container'ı yeniden derler. **Yapılandırılmadan
-çalıştırılmaz:** script içindeki `DOLDURULACAK` işaretli değişkenler (sunucu,
-repo yolu, compose dosyası, container ön eki, port) doğru değerlerle
-doldurulmalı, ardından `DEPLOY_CONFIGURED=1 ./deploy.sh` ile çalıştırılmalıdır.
-Aksi halde script hata verip durur.
+Site sunucuda **Node veya Docker çalıştırmaz** — nginx tek bir dizini servis
+eder. `deploy.sh` statik anlık görüntüyü üretir, sunucuda tarihli yedek alır,
+`rsync -a --delete` ile yazar ve içerik doğrulaması yapar:
+
+```bash
+TABLO_SSH_HOST=<ssh-hedefi> ./deploy.sh
+```
+
+ssh hedefi ortam değişkeninden gelir, depoya yazılmaz. `TABLO_WEB_ROOT` ve
+`TABLO_BACKUP_DIR` isteğe bağlıdır.

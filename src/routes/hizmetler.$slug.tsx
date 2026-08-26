@@ -33,7 +33,7 @@ export const Route = createFileRoute("/hizmetler/$slug")({
         address: {
           "@type": "PostalAddress",
           streetAddress: [SITE.address.line1, SITE.address.line2].filter(Boolean).join(", "),
-          addressLocality: "İstanbul",
+          addressLocality: "Maltepe",
           addressRegion: "İstanbul",
           postalCode: SITE.address.postCode,
           addressCountry: "TR",

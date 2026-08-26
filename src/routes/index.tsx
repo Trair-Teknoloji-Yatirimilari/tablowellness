@@ -75,11 +75,10 @@ const BUSINESS_SCHEMA = JSON.stringify({
   url: SITE.url,
   image: `${SITE.url}${MEDIA.heroPoster}`,
   telephone: SITE.phone,
-  email: SITE.email,
   address: {
     "@type": "PostalAddress",
     streetAddress: [SITE.address.line1, SITE.address.line2].filter(Boolean).join(", "),
-    addressLocality: "İstanbul",
+    addressLocality: "Maltepe",
     addressRegion: "İstanbul",
     postalCode: SITE.address.postCode,
     addressCountry: "TR",
@@ -116,7 +115,9 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: tr.meta.home.ogTitle },
       { property: "og:description", content: tr.meta.home.ogDescription },
       { property: "og:url", content: `${SITE.url}/` },
-      { property: "og:image", content: `${SITE.url}${MEDIA.heroPoster}` },
+      // Ana sayfa kokteki og:image'i EZIYORDU ve yer tutucu hero-poster'a
+      // isaret ediyordu; en cok paylasilan sayfa bu. Marka gorseline cekildi.
+      { property: "og:image", content: `${SITE.url}/medya/og.png` },
     ],
   }),
   component: Index,
@@ -236,9 +237,13 @@ function Nav() {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10 flex items-center justify-between h-16 md:h-20">
         <a href="#top" className="flex flex-col justify-center leading-tight group">
-          <span className="text-gold-gradient font-display text-base md:text-lg tracking-wide whitespace-nowrap">
-            {t.nav.brand}
-          </span>
+          <img
+            src="/medya/logo.webp"
+            alt={SITE.name}
+            width={180}
+            height={78}
+            className="h-9 w-auto"
+          />
           <span className="text-[8px] md:text-[9px] uppercase tracking-[0.35em] text-muted-foreground mt-0.5">
             {t.nav.tagline}
           </span>
@@ -1157,10 +1162,11 @@ function Gallery() {
 
 function Contact() {
   const { t } = useT();
+  // E-posta karti BILEREK YOK: bu alan adinda posta kutusu acilmadi.
+  // Kutu acilinca SITE.email doldurulur ve asagidaki filtre onu geri getirir.
   const cards = [
     { icon: Phone, label: t.contact.cards.phone, value: SITE.phoneDisplay, href: `tel:${SITE.phone}` },
     { icon: MessageCircle, label: "WhatsApp", value: SITE.phoneDisplay, href: whatsappUrl },
-    { icon: Mail, label: t.contact.cards.email, value: SITE.email, href: `mailto:${SITE.email}` },
     {
       icon: MapPin,
       label: t.contact.cards.clinic,
@@ -1244,13 +1250,15 @@ function Contact() {
               <Phone className="w-4 h-4" strokeWidth={1.6} />
               {SITE.phoneDisplay}
             </a>
-            <a
-              href={`mailto:${SITE.email}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-7 py-3.5 text-xs uppercase tracking-widest text-foreground/80 hover:border-primary/60 hover:text-primary transition-all"
-            >
-              <Mail className="w-4 h-4" strokeWidth={1.6} />
-              {t.contact.cards.email}
-            </a>
+            {SITE.email && (
+              <a
+                href={`mailto:${SITE.email}`}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-7 py-3.5 text-xs uppercase tracking-widest text-foreground/80 hover:border-primary/60 hover:text-primary transition-all"
+              >
+                <Mail className="w-4 h-4" strokeWidth={1.6} />
+                {t.contact.cards.email}
+              </a>
+            )}
           </div>
 
           <p className="mt-7 text-sm text-foreground/70 leading-relaxed">{t.form.footer}</p>

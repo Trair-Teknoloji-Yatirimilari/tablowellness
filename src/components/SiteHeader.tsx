@@ -14,11 +14,14 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/40 bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:gap-4 sm:px-6 lg:px-10">
-        <Link
-          to="/"
-          className="min-w-0 truncate font-display text-sm tracking-wide text-gold-gradient sm:text-base"
-        >
-          {t.nav.brand}
+        <Link to="/" className="shrink-0">
+          <img
+            src="/medya/logo.webp"
+            alt={SITE.name}
+            width={180}
+            height={78}
+            className="h-9 w-auto"
+          />
         </Link>
 
         <nav className="flex shrink-0 items-center gap-3 text-xs uppercase tracking-[0.2em] text-foreground/70 sm:gap-5">

@@ -4,7 +4,8 @@
  * Tum iletisim/marka bilgisi TEK yerden bu dosyadan gelir;
  * baska dosyalarda telefon/adres/e-posta hardcode ETMEYIN.
  *
- * TODO isaretli alanlar musteriden henuz alinmadi.
+ * TODO isaretli alanlar musteriden henuz alinmadi. Telefon ve adres
+ * 26 Agustos 2026'da gercek bilgiyle dolduruldu.
  *
  * Bu proje baska bir musteri sitesinin kod tabanindan turetildi. O
  * projenin GERCEK ILETISIM BILGILERI TASINMADI ve tasinmamalidir:
@@ -17,26 +18,28 @@ export const SITE = {
 
   domain: "tablowellness.com",
   url: "https://tablowellness.com",
-  /** Ikinci domain — .com'a 301 yonlendirilecek */
-  altDomain: "tablowellness.com.tr",
 
-  /** TODO: gercek e-posta kutusu acilinca dogrula */
-  email: "info@tablowellness.com",
-  mailFrom: "Tablo Wellness <iletisim@tablowellness.com>",
+  /**
+   * BOS: bu alan adinda posta kutusu YOK. Musteri kisisel Gmail
+   * kullaniyor ve o adres siteye yazilmaz. Kutu acildiginda buraya
+   * yazilir; bos oldugu surece e-posta gosteren her yer KOSULLU olarak
+   * hic render edilmez (bkz. SiteFooter ve iletisim bolumu). Olmayan
+   * bir adresi yayina koymak, bos bir "mailto:" birakmaktan da kotu.
+   */
+  email: "",
 
-  /** TODO: GERCEK TELEFON ALINMADI. Yayina almadan once doldurun. */
-  phone: "+900000000000",
-  phoneDisplay: "+90 000 000 00 00",
+  phone: "+905422631719",
+  phoneDisplay: "+90 542 263 17 19",
   /** WhatsApp icin uluslararasi format, + ve bosluk olmadan */
-  whatsapp: "900000000000",
+  whatsapp: "905422631719",
 
-  /** TODO: GERCEK ADRES ALINMADI. Yayina almadan once doldurun. */
   address: {
-    line1: "TODO Mahallesi, TODO Caddesi No:0",
+    line1: "Zümrütevler Mah., Emek Cad. No:77 D:83B",
+    /** Bos — addressOneLine/MultiLine filter(Boolean) ile eliyor. */
     line2: "",
-    city: "İstanbul",
-    postCode: "",
-    mapsQuery: "Tablo+Wellness+İstanbul",
+    city: "Maltepe / İstanbul",
+    postCode: "34852",
+    mapsQuery: "Zümrütevler+Mah.+Emek+Cad.+No:77+D:83B+34852+Maltepe+İstanbul",
   },
 
   /** TODO: gercek calisma saatleri musteriden alinacak */

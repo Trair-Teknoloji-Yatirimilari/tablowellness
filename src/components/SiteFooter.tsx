@@ -2,11 +2,13 @@ import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Instagram } from "lucide-react";
 import { useT } from "@/i18n/context";
 import { SERVICES } from "@/data/services";
-import { SITE, mapsUrl } from "@/data/site";
+import { SITE, mapsUrl, addressMultiLine } from "@/data/site";
 
 export function SiteFooter() {
   const { t } = useT();
-  const addressLines = t.footer.address.split("\n");
+  // Sozluk adresi BOS ise site.ts tek kaynak. Bos stringi split etmek
+  // [""] uretir ve altbilgide bos bir satir birakirdi.
+  const addressLines = (t.footer.address || addressMultiLine).split("\n");
   return (
     <footer className="relative border-t border-border/40 py-12 md:py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -26,10 +28,15 @@ export function SiteFooter() {
               <Phone className="w-4 h-4 text-primary" strokeWidth={1.5} />
               {SITE.phoneDisplay}
             </a>
-            <a href={`mailto:${SITE.email}`} className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors">
-              <Mail className="w-4 h-4 text-primary" strokeWidth={1.5} />
-              {SITE.email}
-            </a>
+            {/* SITE.email BOS iken hic render edilmez: bos bir "mailto:"
+                birakmak, adres vermemekten kotudur. Kutu acilinca site.ts'e
+                yazilmasi yeterli, burada baska degisiklik gerekmez. */}
+            {SITE.email && (
+              <a href={`mailto:${SITE.email}`} className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors">
+                <Mail className="w-4 h-4 text-primary" strokeWidth={1.5} />
+                {SITE.email}
+              </a>
+            )}
             <a
               href={mapsUrl}
               target="_blank"

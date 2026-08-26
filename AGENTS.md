@@ -25,6 +25,7 @@ npm run build
 ```
 
 ## Deploy
-`deploy.sh` yapilandirilmadan calismaz. Icindeki DOLDURULACAK degiskenler
-(sunucu yolu, compose dosyasi, container adi, port) ayarlanmadan
-`DEPLOY_CONFIGURED=1` verilmemelidir.
+Site statik: sunucuda Node/Docker yok, nginx bir dizini servis eder.
+`deploy.sh` ssh hedefini ortam degiskeninden alir:
+`TABLO_SSH_HOST=<hedef> ./deploy.sh`. Yedek alir, `rsync -a --delete` ile
+yazar, sonra icerik dogrulamasi yapar.

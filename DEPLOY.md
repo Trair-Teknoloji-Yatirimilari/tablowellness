@@ -59,8 +59,8 @@ canlıyla **birebir aynı**; ham hash ise 12'sinde de farklıydı.
 
 ## Alan adları
 
-`tablowellness.com` kanonik. `www` ve `tablowellness.com.tr` (+`www`)
-`301` ile ona gider. Dördü tek Let's Encrypt sertifikasında.
+`tablowellness.com` kanonik; `www` `301` ile ona gider. İkisi tek Let's
+Encrypt sertifikasında. **İkinci bir alan adı planlanmıyor.**
 
 ## Ortam değişkenleri
 
