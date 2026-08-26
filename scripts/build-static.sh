@@ -119,7 +119,7 @@ for f in index.html hizmetler.html kvkk.html sitemap.xml robots.txt \
   [ -f "$OUT/$f" ] || fail "$f yok"
 done
 
-# Skyland'de favicon EKSIK degildi — YANLIS dosya gitmisti. Varligini
+# Onceki projede favicon EKSIK degildi — YANLIS dosya gitmisti. Varligini
 # kontrol etmek yetmez, boyutu da bakilir.
 for f in favicon.ico apple-touch-icon.png; do
   if [ -f "$OUT/$f" ]; then

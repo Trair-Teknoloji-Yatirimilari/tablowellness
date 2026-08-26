@@ -112,8 +112,8 @@
 
 @utility hairline {
   height: 1px;
-  /* 26 Agustos 2026: burada Skyland'in elektrik yesili SABIT yaziliydi ve
-     :root degisince tek basina kaldi. Komsu yardimcilar (text-gold-gradient,
+  /* 26 Agustos 2026: burada devralinan kod tabaninin elektrik yesili SABIT
+     yaziliydi ve :root degisince tek basina kaldi. Komsu yardimcilar (text-gold-gradient,
      glow-gold) token kullaniyordu, bu atlanmis. Marka turkuazina cekildi. */
   background: linear-gradient(90deg, transparent, oklch(0.725 0.103 195 / 0.55), transparent);
 }
