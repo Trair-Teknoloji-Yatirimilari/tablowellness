@@ -15,10 +15,46 @@ SSH_HOST="${TABLO_SSH_HOST:?TABLO_SSH_HOST verin (or. TABLO_SSH_HOST=sunucum ./d
 WEB_ROOT="${TABLO_WEB_ROOT:-/var/www/html/tablowellness}"
 BACKUP_DIR="${TABLO_BACKUP_DIR:-/root/web-backups}"
 OUT="static"
+KATALOG="src/data/services.ts"
+
+# Yalnizca dogrulama: derleme/yedek/rsync atlanir, 5. adim ve Cloudflare
+# hatirlatmasi calisir. Dagitimdan sonra "gercekten gecti mi" diye bakmak icin.
+SADECE_DOGRULA=0
+[ "${1:-}" = "--dogrula" ] && SADECE_DOGRULA=1
+
+# ── Hizmet sayisi SABIT YAZILMAZ, katalogdan turetilir ───────────────────
+# Burada eskiden "9" yaziyordu ve bir zamanlar dogruydu (bkz. 3. adimdaki
+# 20 Agustos 2026 notu: katalog 21'den 9'a inmisti). Sonra 8'e indi ve bu
+# satir guncellenmedi — yani dogrulama o gunden beri HER deploy'da dustu.
+# Dosyalar yazildiktan SONRA calistigi icin dagitimi durdurmadi, bu yuzden
+# kimse fark etmedi; ama ardindan gelen Cloudflare uyarisinin basilmasini
+# engelledi. 14 Ekim 2026'da tam bu yuzden edge eski gorselleri servis
+# etmeye devam etti.
+#
+# Sayiyi tek dogru kaynaktan okumak, katalog degistiginde kontrolun
+# kendiliginden dogru kalmasini saglar. Desen tutmazsa SESSIZCE 0'a dusmez,
+# hata verir: turetilemeyen bir beklenti, yanlis bir beklentiden kotudur.
+BEKLENEN_HIZMET="$(grep -cE '^[[:space:]]+slug: "[^"]+",' "$KATALOG" || true)"
+[ "${BEKLENEN_HIZMET:-0}" -gt 0 ] || {
+  echo "HATA: $KATALOG icinden hizmet sayisi turetilemedi (desen tutmadi)"
+  exit 1
+}
+echo ">> katalog: $BEKLENEN_HIZMET hizmet ($KATALOG)"
+
+if [ "$SADECE_DOGRULA" -eq 0 ]; then
 
 echo ">> 1/5 Statik anlik goruntu uretiliyor"
 bash scripts/build-static.sh
 [ -d "$OUT" ] || { echo "HATA: $OUT/ uretilmedi"; exit 1; }
+
+# Derleme katalogdaki her hizmeti uretti mi? Sunucuya YAZMADAN once bak:
+# eksik sayfayi dagittiktan sonra fark etmek, --delete ile eskisini de
+# silmis olmak demek.
+URETILEN="$(find "$OUT/hizmetler" -name '*.html' 2>/dev/null | wc -l | tr -d ' ')"
+[ "$URETILEN" -eq "$BEKLENEN_HIZMET" ] || {
+  echo "HATA: derleme $URETILEN hizmet sayfasi uretti, katalogda $BEKLENEN_HIZMET var"
+  exit 1
+}
 
 echo ">> 2/5 Sunucuda tarihli yedek"
 # --delete geri alinamaz; yedek once alinir.
@@ -43,13 +79,15 @@ ssh "$SSH_HOST" "
   find '$WEB_ROOT' -type f -exec chmod 644 {} +
 "
 
+fi  # SADECE_DOGRULA
+
 echo ">> 5/5 Dogrulama — durum kodu degil, icerik"
 ssh "$SSH_HOST" "
   set -e
   n=\$(find '$WEB_ROOT' -type f | wc -l)
   h=\$(find '$WEB_ROOT/hizmetler' -name '*.html' | wc -l)
-  echo \"   dosya: \$n   hizmet sayfasi: \$h\"
-  [ \"\$h\" -eq 9 ] || { echo '   HATA: 9 hizmet sayfasi bekleniyordu'; exit 1; }
+  echo \"   dosya: \$n   hizmet sayfasi: \$h (katalog: $BEKLENEN_HIZMET)\"
+  [ \"\$h\" -eq $BEKLENEN_HIZMET ] || { echo \"   HATA: $BEKLENEN_HIZMET hizmet sayfasi bekleniyordu, \$h bulundu\"; exit 1; }
   grep -qa 'medya/hero.mp4' '$WEB_ROOT/index.html' || { echo '   HATA: hero videosu ana sayfada yok'; exit 1; }
   echo '   dogrulama gecti'
 "
